@@ -46,6 +46,4 @@ class Cell
         end
     end
 
-
-
 end

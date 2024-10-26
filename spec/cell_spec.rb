@@ -119,13 +119,6 @@ RSpec.describe Cell do
             expect(cell_2.render(true)).to eq("X")
         end 
 
-    end
-            
-            # cruiser = Ship.new("Cruiser", 3)
-            
-            # expect(cell.fired_upon?).to eq(false)
-            # cell.fire_upon
-            # expect(cell.fired_upon?).to eq(true)
-    
+    end   
 
 end
