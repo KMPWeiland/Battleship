@@ -32,9 +32,17 @@ class Cell
         end
     end
 
-
-
-
-
+    def render(reveal = false)
+        if fired_upon? == false && reveal == false 
+            "."
+        elsif fired_upon? == true && empty? == true
+            "M"
+        elsif fired_upon? == false && empty? == false && reveal == true
+            "S"
+        elsif fired_upon? == true && empty? == false 
+            "H"
+        end
+    end
+    # if empty? == false && reveal = true
 
 end
