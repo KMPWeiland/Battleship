@@ -1,5 +1,5 @@
 class Board
-    attr_reader :board_hash
+    # attr_reader :board_hash
 
     def initialize
         # @board_hash = {
@@ -28,4 +28,24 @@ class Board
             "D4" => Cell.new("D4")
     }
     end
+
+    def valid_placement?(ship_object, coordinate_array)
+        if coordinate_array.count == ship_object.length && consecutive_coordinates == true
+            true
+        else
+            false
+        end
+    end
+
+    def consecutive_coordinates(coordinate_array)
+        coord_column = coordinate_array.map do |coordinate|
+            coordinate[1]
+        coord_row = coordinate_array.map do |coordinate|
+            coordinate[2].to_i
+        if coord_column.
+    end
+
+
+
+
 end
