@@ -31,7 +31,7 @@ RSpec.describe Cell do
             cell = Cell.new("B4")
             cruiser = Ship.new("Cruiser", 3)
 
-            cell.place_ship(cruiser)  
+            cell.place_ship(cruiser)
             expect(cell.ship).to eq(cruiser)
             expect(cell.empty?).to eq(false)
         end
@@ -50,9 +50,14 @@ RSpec.describe Cell do
         it 'impacts health after hit' do
             cell = Cell.new("B4")
             cruiser = Ship.new("Cruiser", 3)
+            cell.place_ship(cruiser)
+            
+
+            expect(cruiser.health).to eq(3)
 
             cell.fire_upon
-            # expect(ship.hit).to eq(true)
+            
+            expect(cell.takes_hit).to eq(true)
             expect(cruiser.health).to eq(2)
         end
     end

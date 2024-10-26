@@ -1,10 +1,12 @@
 class Cell
-    attr_reader :coordinate, :ship
+    attr_reader :coordinate, 
+                :ship,
+                :takes_hit
 
-    def initialize(coordinate)
+    def initialize(coordinate, ship = nil, takes_hit = false)
         @coordinate = coordinate
-        @ship = nil
-        @hits = 0
+        @ship = ship
+        @takes_hit = takes_hit
     end
 
     def empty?
@@ -13,24 +15,26 @@ class Cell
         else
             false
         end
-    end
+    end                     
 
     def place_ship(ship_name)
         @ship = ship_name
     end
 
     def fired_upon?
-        if @hits > 0
-            true 
-        else
-            false
+        @takes_hit        
+    end
+
+    def fire_upon 
+        @takes_hit = true
+        if empty? == false
+            @ship.health -= 1 
         end
     end
 
-    def fire_upon
-        @hits += 1
-        ship.health -= 1
 
-    end
+
+
+
 
 end
