@@ -29,6 +29,16 @@ class Board
     }
     end
 
+    def valid_coordinate?(coordinate)
+        valid_row = ["A", "B", "C", "D"]
+        valid_line = ["1", "2", "3", "4"]
+
+        row = coordinate[0]
+        line = coordinate[1]
+        
+        coordinate.length == 2 && valid_row.include?(row) && valid_line.include?(line)
+    end
+
     def valid_placement?(ship_object, coordinate_array)
         if coordinate_array.count == ship_object.length && consecutive_coordinates == true
             true
