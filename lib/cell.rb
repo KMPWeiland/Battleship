@@ -37,12 +37,15 @@ class Cell
             "."
         elsif fired_upon? == true && empty? == true
             "M"
+        elsif @ship.sunk?
+            "X"
         elsif fired_upon? == false && empty? == false && reveal == true
             "S"
         elsif fired_upon? == true && empty? == false 
             "H"
         end
     end
-    # if empty? == false && reveal = true
+
+
 
 end
