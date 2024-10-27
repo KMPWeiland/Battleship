@@ -39,7 +39,7 @@ class Board
     end
 
     def valid_placement?(ship_object, coordinate_array)
-        if coordinate_array.count == ship_object.length && consecutive_coordinates(coordinate_array)
+        if coordinate_array.count == ship_object.length && consecutive_coordinates(coordinate_array) && not_diagonal(coordinate_array)
             true
         else
             false
@@ -76,10 +76,31 @@ class Board
         false
     end
 
-    def not_diagonal(coordinate_array)
-        #can't got up alphabetically and numericall at the same time
-        #try RETRUNING FALSE WHEN consecutive_coordinates(coordinate_array)  return true only when BOTH horizontal and vertical placement conditions are met simultaneously 
+    def not_diagonal(coordinate_array)  #can't got up alphabetically and numerically at the same time
+        #try RETRUNING FALSE WHEN consecutive_coordinates(coordinate_array)
+        # return true only when BOTH horizontal and vertical placement conditions are met simultaneously 
+        coordinates_rows = coordinate_array.map do |coordinate|
+            coordinate[0]
+        end
 
+        coordinates_columns = coordinate_array.map do |coordinate|
+            coordinate[1].to_i
+        end
+
+        if coordinates_rows.all? do |row| #confirm row letters are the same
+                row != coordinates_rows[0]
+            end
+            return false
+        end
+
+        if coordinates_columns.all? do |column| #confirm column numbers are the same
+                column != coordinates_columns[0]
+            end
+            #now check if rows are consecutive, use .ord to turn letters to numbers, use .all? to return a boolean
+            return false
+        end
+
+        true
     end
 
     # def consecutive_columns(coordinate_array)
