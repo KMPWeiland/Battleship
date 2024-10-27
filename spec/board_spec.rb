@@ -39,7 +39,6 @@ RSpec.describe Board do
 
         it 'will return false if coordinate is not valid' do
             board = Board.new
-            binding.pry
             expect(board.valid_coordinate?("A5")).to eq false
             expect(board.valid_coordinate?("E1")).to eq false
             expect(board.valid_coordinate?("A22")).to eq false
@@ -52,21 +51,21 @@ RSpec.describe Board do
             @cruiser = Ship.new("Cruiser", 3)
             @submarine = Ship.new("Submarine", 2)
         end
-        it 'has an arry argument that is the same length as the ship' do
-            # board = Board.new
-            # cruiser = Ship.new("Cruiser", 3)
-            # submarine = Ship.new("Submarine", 2)
-            expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to be(false)
-            expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to be(false)
-        end
 
-        it 'coordinates are consecutive' do
-            # board = Board.new
-            # cruiser = Ship.new("Cruiser", 3)
-            # submarine = Ship.new("Submarine", 2)
+            it 'has an arry argument that is the same length as the ship' do
+                # board = Board.new
+                # cruiser = Ship.new("Cruiser", 3)
+                # submarine = Ship.new("Submarine", 2)
+                expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to be(false)
+                expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to be(false)
+            end
 
-            expect(board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to be(false)
-        end
+            it 'coordinates are consecutive' do
+                # board = Board.new
+                # cruiser = Ship.new("Cruiser", 3)
+                # submarine = Ship.new("Submarine", 2)
+                expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to be(false)
+            end
     end
 
 end
