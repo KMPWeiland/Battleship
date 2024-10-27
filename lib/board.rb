@@ -38,6 +38,8 @@ class Board
         coordinate.length == 2 && valid_row.include?(row) && valid_line.include?(line)
     end
 
+ board_branch_validating_placements
+
     def valid_placement?(ship_object, coordinate_array)
         if coordinate_array.count == ship_object.length && consecutive_coordinates(coordinate_array) && not_diagonal(coordinate_array)
             true
@@ -130,4 +132,6 @@ class Board
     #     #     false
     #     # end
         
+end
+
 end
