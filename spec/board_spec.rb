@@ -123,12 +123,32 @@ RSpec.describe Board do
             # expect(cell_3.ship == cell_2.ship).to be(true)
             # expect(cell_3.ship == cell_4.ship).to be(false)
         end
-
-
     end
 
+    describe '#can_render' do
+        it 'can render board for game' do
+            board = Board.new
+            cruiser = Ship.new("Cruiser", 3) 
+            board.place(cruiser, ["A1", "A2", "A3"]) 
 
+            expected_layout = " 1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+            expect(board.render).to eq(expected_layout)
+        end
 
+        it 'can render board for game' do
+            board = Board.new
+            cruiser = Ship.new("Cruiser", 3) 
+            board.place(cruiser, ["A1", "A2", "A3"]) 
+# binding.pry
+            expected_layout = " 1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+            expect(board.render(true)).to eq(expected_layout)
+        end
+    end
 
-
+        # it 'displays specific cells as occupied' do
+        #     board.mark_cell("A1", "empty?")
+        #     board.mark_cell("B2", "empty?")
+        #     board.mark_cell("C3", "empty?")
+        #     expected_layout = "   1   2   3   4\nA  X   .   .   . \nB  .   X   .   . \nC  .   .   X   . \nD  .   .   .   . \n"
+        #     expect(board.display).to eq(expected_layout)
 end
