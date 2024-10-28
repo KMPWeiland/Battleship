@@ -1,13 +1,8 @@
 class Board
-    # attr_reader :board_hash
-    def initialize
-        # @board_hash = {
-        #     "A1" => :value_1,
-        #     "A2" => :value_2
-        # }
-    end
+    attr_reader :cells
 
-    def cells
+    def initialize
+        @cells =
         {
             "A1" => Cell.new("A1"),
             "A2" => Cell.new("A2"),
@@ -15,7 +10,7 @@ class Board
             "A4" => Cell.new("A4"),
             "B1" => Cell.new("B1"),
             "B2" => Cell.new("B2"),
-            "B3" => Cell.new("B3"),
+            "B3" => Cell.new("B3"),     
             "B4" => Cell.new("B4"),
             "C1" => Cell.new("C1"),
             "C2" => Cell.new("C2"),
@@ -38,15 +33,17 @@ class Board
         coordinate.length == 2 && valid_row.include?(row) && valid_line.include?(line)
     end
 
- board_branch_validating_placements
-
     def valid_placement?(ship_object, coordinate_array)
-        if coordinate_array.count == ship_object.length && consecutive_coordinates(coordinate_array) && not_diagonal(coordinate_array)
+        if coordinate_array.count == ship_object.length && 
+            consecutive_coordinates(coordinate_array) && 
+            not_diagonal(coordinate_array) && 
+            coordinate_array.any? {|coordinate| @cells[coordinate].empty?}
             true
         else
             false
         end
     end
+    
 
     def consecutive_coordinates(coordinate_array)
         coordinates_rows = coordinate_array.map do |coordinate|
@@ -57,18 +54,14 @@ class Board
             coordinate[1].to_i
         end
 
-        if coordinates_rows.all? do |row| #confirm row letters are the same
-                row == coordinates_rows[0]
-            end
+        if coordinates_rows.all? { |row| row == coordinates_rows[0] } #confirm row letters are the same
             #now check if columns are consecutive, use .all? to return a boolean
             return coordinates_columns.each_cons(2).all? do |first, second| 
                 second == first + 1
             end
         end
 
-        if coordinates_columns.all? do |column| #confirm column numbers are the same
-                column == coordinates_columns[0]
-            end
+        if coordinates_columns.all? { |column| column == coordinates_columns[0] } #confirm column numbers are the same
             #now check if rows are consecutive, use .ord to turn letters to numbers, use .all? to return a boolean
             return coordinates_rows.each_cons(2).all? do |first, second|
                 second.ord == first.ord + 1
@@ -78,9 +71,9 @@ class Board
         false
     end
 
-    def not_diagonal(coordinate_array)  #can't got up alphabetically and numerically at the same time
-        #try RETRUNING FALSE WHEN consecutive_coordinates(coordinate_array)
-        # return true only when BOTH horizontal and vertical placement conditions are met simultaneously 
+    def not_diagonal(coordinate_array)  
+        # NB: can't got up alphabetically and numerically at the same time 
+        #return true only when BOTH horizontal and vertical placement conditions are met simultaneously 
         coordinates_rows = coordinate_array.map do |coordinate|
             coordinate[0]
         end
@@ -89,21 +82,51 @@ class Board
             coordinate[1].to_i
         end
 
-        if coordinates_rows.all? do |row| #confirm row letters are the same
-                row != coordinates_rows[0]
-            end
+        if coordinates_rows.all? { |row| row != coordinates_rows[0] } 
             return false
         end
 
-        if coordinates_columns.all? do |column| #confirm column numbers are the same
-                column != coordinates_columns[0]
-            end
+        if coordinates_columns.all? { |column| column != coordinates_columns[0] } 
+            #confirm column numbers are the same
             #now check if rows are consecutive, use .ord to turn letters to numbers, use .all? to return a boolean
             return false
         end
 
         true
     end
+
+    def place(ship_object, coordinate_array)
+        if valid_placement?(ship_object, coordinate_array)
+            coordinate_array.each do |coordinate| 
+                @cells[coordinate].place_ship(ship_object)               
+            end
+        end
+    end
+
+    # def not_overlapping(coordinate_array)
+    #     coordinate_array.all? { |coordinate| cells[coordinate].empty?}
+    # end
+
+
+
+
+
+    # def not_overlapping(coordinate_array)
+    #     if coordinate_array.all? { |coordinate| cells[coordinate].empty?}
+    #         false
+    #     else 
+    #         true
+    #     end
+    # end
+
+
+    # def not_overlapping(coordinate_array, target_coordinate)
+    #     if coordinate_array.all? { |coordinate| cell.coordinate != target_coordinate}
+    #         false
+    #     else
+    #         true
+    #     end
+    # end
 
     # def consecutive_columns(coordinate_array)
     #     coord_column = coordinate_array.map do |coordinate|
@@ -131,7 +154,20 @@ class Board
     #     # else
     #     #     false
     #     # end
-        
-end
 
+
+    # def valid_placement?(ship_object, coordinate_array)
+    #     length_match = coordinate_array.count == ship_object.length
+    #     consecutive = consecutive_coordinates(coordinate_array)
+    #     non_diagonal = not_diagonal(coordinate_array)
+    #     non_overlapping = not_overlapping(coordinate_array)
+    
+    #     puts "Length match: #{length_match}" # Should print true
+    #     puts "Consecutive: #{consecutive}"   # Should print true
+    #     puts "Non-diagonal: #{non_diagonal}" # Should print true
+    #     puts "Non-overlapping: #{non_overlapping}" # Should print true
+    
+    #     length_match && consecutive && non_diagonal && non_overlapping
+    # end
+    
 end

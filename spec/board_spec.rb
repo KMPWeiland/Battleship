@@ -11,10 +11,6 @@ RSpec.describe Board do
             board = Board.new
             expect(board).to be_a Board
         end
-
-        # it 'is a hash' do
-        #     board = Board.new
-        #     expect(board.board_hash).to be_a Hash
     end
 
     describe '#cells_method' do
@@ -50,6 +46,7 @@ RSpec.describe Board do
             @board = Board.new
             @cruiser = Ship.new("Cruiser", 3)
             @submarine = Ship.new("Submarine", 2)
+            @row_boat = Ship.new("Row Boat", 2)
         end
 
             it 'has an arry argument that is the same length as the ship' do
@@ -73,7 +70,7 @@ RSpec.describe Board do
             it 'coordinates are not diagonal' do
                 expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to be(false)
                 expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to be(false)
-                expect(@board.valid_placement?(@submarine, ["C2", "C3"])).to be(true)
+                expect(@board.valid_placement?(@row_boat, ["A3", "A4"])).to be(true)
             end
 
             it 'checks for valid placements' do
@@ -82,20 +79,56 @@ RSpec.describe Board do
             end
     end
 
-    describe '#valid_coordinate?' do
-        it 'will retrun true if coordinate is valid' do
+    describe '#placing ships' do 
+        it 'can place ship in the boards cells' do
             board = Board.new
-
-            expect(board.valid_coordinate?("A1")).to eq true
-            expect(board.valid_coordinate?("D4")).to eq true
+            cruiser = Ship.new("Cruiser", 3) 
+            
+            # board.place(cruiser, ["A1", "A2", "A3"])
+            expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be(true)
         end
 
-        it 'will return false if coordinate is not valid' do
+        it 'creates cell variables' do
             board = Board.new
-            binding.pry
-            expect(board.valid_coordinate?("A5")).to eq false
-            expect(board.valid_coordinate?("E1")).to eq false
-            expect(board.valid_coordinate?("A22")).to eq false
+            cruiser = Ship.new("Cruiser", 3) 
+            
+            board.place(cruiser, ["A1", "A2", "A3"])
+
+            cell_1 = board.cells["A1"] 
+            cell_2 = board.cells["A2"]
+            cell_3 = board.cells["A3"]
+
+            expect(cell_3.ship == cell_2.ship).to be(true)
         end
+
+        it 'ships do not overlap' do
+            board = Board.new
+            cruiser = Ship.new("Cruiser", 3) 
+            
+            board.place(cruiser, ["A1", "A2", "A3"])
+
+            cell_1 = board.cells["A1"] 
+            cell_2 = board.cells["A2"]
+            cell_3 = board.cells["A3"]
+            
+            submarine = Ship.new("Submarine", 2)
+            board.place(submarine, ["A1", "B1"])
+           
+
+            expect(board.valid_placement?(submarine,["A1", "B1"])).to be(false)
+
+
+            # expect(board.not_diagonal(["A1", "B1"])).to be(true)
+            # expect(cell_1.ship == cell_1.ship).to be(true)
+            # expect(cell_3.ship == cell_2.ship).to be(true)
+            # expect(cell_3.ship == cell_4.ship).to be(false)
+        end
+
+
     end
+
+
+
+
+
 end
