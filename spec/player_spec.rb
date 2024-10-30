@@ -3,6 +3,7 @@ require './lib/board'
 require './lib/cell'
 require './lib/ship'
 
+
 RSpec.describe Player do
     before :each do
       @board = Board.new
