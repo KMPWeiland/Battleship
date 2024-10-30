@@ -103,6 +103,31 @@ class Board
         end
     end
 
+board_branch_rendering
+    def render(reveal = false)
+        if reveal == true 
+            p "  1 2 3 4 \n" + 
+            "A #{reveal_ship("A1")} #{reveal_ship("A2")} #{reveal_ship("A3")} #{reveal_ship("A4")} \n" +
+            "B #{reveal_ship("B1")} #{reveal_ship("B2")} #{reveal_ship("B3")} #{reveal_ship("B4")} \n" +
+            "C #{reveal_ship("C1")} #{reveal_ship("C2")} #{reveal_ship("C3")} #{reveal_ship("C4")} \n" +
+            "D #{reveal_ship("C1")} #{reveal_ship("D2")} #{reveal_ship("D3")} #{reveal_ship("D4")} \n"
+        else
+            p "  1 2 3 4 \n" + 
+            "A #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render} \n" +
+            "B #{@cells["B1"].render} #{@cells["B2"].render} #{@cells["B3"].render} #{@cells["B4"].render} \n" +
+            "C #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render} \n" +
+            "D #{@cells["C1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
+        end
+    end
+
+    def reveal_ship(cell_key)
+        if @cells[cell_key].fired_upon? == false && @cells[cell_key].empty? == false 
+            @cells[cell_key].render(true)
+        else 
+            @cells[cell_key].render
+        end
+    end
+
     def render(reveal = false) 
         if reveal == true 
             p " 1 2 3 4 \n" +

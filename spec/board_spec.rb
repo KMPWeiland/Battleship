@@ -116,13 +116,36 @@ RSpec.describe Board do
            
 
             expect(board.valid_placement?(submarine,["A1", "B1"])).to be(false)
-
-
-            # expect(board.not_diagonal(["A1", "B1"])).to be(true)
-            # expect(cell_1.ship == cell_1.ship).to be(true)
-            # expect(cell_3.ship == cell_2.ship).to be(true)
-            # expect(cell_3.ship == cell_4.ship).to be(false)
         end
+    end
+
+    describe '#Rendering the board' do 
+        it 'render (no reveal)' do
+            board = Board.new
+            cruiser = Ship.new("Cruiser", 3) 
+            
+            board.place(cruiser, ["A1", "A2", "A3"])      
+
+            expect(board.render).to eq("  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n")       
+        end
+board_branch_rendering
+        it 'render (does reveal)' do
+            board = Board.new
+            cruiser = Ship.new("Cruiser", 3) 
+            
+            board.place(cruiser, ["A1", "A2", "A3"])      
+
+            expect(board.render(true)).to eq("  1 2 3 4 \n" +
+                "A S S S . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n")   
+        end
+
     end
 
     describe '#can_render' do
