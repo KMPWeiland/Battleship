@@ -19,28 +19,60 @@ RSpec.describe Game do
         end
     end
 
+    # describe '#game play' do
+    #     it "game starts" do
+    #         game1 = Game.new("Tom")
+    #         expect(game1.start).to output("Welcome to BATTLESHIP /n Enter p to play. Enter q to quit.")
+    #     end
+    # end
+
     describe 'computer placements' do
         it 'computer places ships' do
             game1 = Game.new("Tom")
 
-            #this method automate random placesments on the board of the computer's two ships
-            #randomize possible options AND must confirm the random placements are valid
-            game1.computer_place_ships
-
-            
-
-
-            #test to confirm
-
-
-            #now we need to test that the computer did place ships by looking at the board
-
-            
-
-
-            # expect(game1.computer_place_ship).to eq()
+            expect(game1.computer_place_ships).to eq("I have laid out my ships on the grid. \n" + 
+            "You now need to lay out your two ships. \n" +
+            "The Cruiser is three units long and the Submarine is two units long. \n" +
+            "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n" +
+            "Enter the squares for the Cruiser (3 spaces): ")
         end
     end
+
+    describe 'player placements' do
+        it 'player places ships' do
+            game1 = Game.new("Tom")
+
+            expect(game1.player_places_cruiser).to eq("I have laid out my ships on the grid. \n" + 
+            "You now need to lay out your two ships. \n" +
+            "The Cruiser is three units long and the Submarine is two units long. \n" +
+            "  1 2 3 4 \n" +
+                "A . . . . \n" +
+                "B . . . . \n" +
+                "C . . . . \n" +
+                "D . . . . \n" +
+            "Enter the squares for the Cruiser (3 spaces): ")
+        end
+    end
+
+
+
+
+
+    #         #test to confirm
+
+
+    #         #now we need to test that the computer did place ships by looking at the board
+
+            
+
+
+    #         # expect(game1.computer_place_ship).to eq()
+    #     end
+    # end
 
     
 end
