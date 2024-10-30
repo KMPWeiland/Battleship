@@ -18,7 +18,7 @@ class Game
 
     def start
         puts "Hello Sailor! Welcome to BATTLESHIP. \n Enter p to play. Enter q to quit."
-        user_input = gets.chomp  # Get user input and store it in user_input
+        user_input = gets.chomp.downcase  # Get user input and store it in user_input
         if user_input == "p"
             computer_place_ships
         elsif user_input == "q"
@@ -43,7 +43,6 @@ class Game
        #3 find random AND valid placements for the computers' submarine
        place_ships_randomly(@comp_sub, coord_array, 2)
        
-
        #4 display computer board and prompt player to input their coordinates
        display_computer_board  
 
@@ -99,10 +98,98 @@ class Game
         player_cruiser_coords = user_input.split(" ")
         if @player_board.valid_placement?(@player_sub, player_cruiser_coords)
             @player_board.place(@player_sub, player_cruiser_coords)
-            # display_both_boards
+            display_boards
         else
             puts "Those are invalid coordinates. Please try again."
             player_places_sub
+        end
+    end
+
+        # # Render both boards with appropriate visibility settings
+        # player_view = "Player's Board:\n" + @player_board.render(true)      # Render player’s board, showing ships
+        # computer_view = "Computer's Board:\n" + @comp_board.render      # Render computer’s board, hiding ships
+        # "#{player_view}\n\n#{computer_view}"                               # Return the combined view as a string
+       
+    def display_boards
+        # Print both boards with appropriate labels and visibility settings
+        puts "==============COMPUTER BOARD=============="
+        puts @comp_board.render
+        puts "==============PLAYER BOARD=============="
+        puts @player_board.render(true)
+        player_shot
+    end
+
+    def player_shot
+        loop do
+            puts "Enter the coordinate for your shot:"
+            coordinate = gets.chomp.upcase
+
+            if valid_player_shot?(coordinate)
+                cell = @comp_board.cells[coordinate]
+                cell.fire_upon
+                display_shot_result("Your", coordinate, cell.render)
+                computer_shot
+                # display_boards
+                break
+            else
+                puts "Invalid or previously targeted coordinate. Please try again."
+            end
+        end
+    end
+
+    def display_shot_result(player, coordinate, render_result)
+        if render_result == "M"
+            puts "#{player} shot on #{coordinate} was a miss."
+        elsif render_result == "H"
+            puts "#{player} shot on #{coordinate} hit a ship!"
+        elsif render_result == "X"
+            puts "#{player} shot on #{coordinate} sunk the ship!"
+        else
+            "????"
+        end
+    end
+
+    def valid_player_shot?(coordinate)
+        @comp_board.valid_coordinate?(coordinate) && !@comp_board.cells[coordinate].fired_upon?
+    end
+    
+        
+    def computer_shot
+        loop do 
+        # Computer chooses a coordinate and fires on the player's board
+            available_coordinates = @player_board.cells.keys.select { |coord| !@player_board.cells[coord].fired_upon? }
+            random_coord = available_coordinates.sample
+            if valid_comp_shot?(random_coord)
+                cell = @comp_board.cells[random_coord]
+                cell.fire_upon
+                display_shot_result("My", random_coord, cell.render)
+                # player_shot
+                display_boards
+                break
+            end            
+        end
+    end
+
+    def valid_comp_shot?(coordinate)
+        @player_board.cells.key?(coordinate) && !@player_board.cells[coordinate].fired_upon?
+    end
+     
+    # end
+    #     coordinate = computer_random_coordinate                            # Computer selects a target coordinate
+    #     result = player_board.cells[coordinate].fire_upon                 # Fire on the specific cell in the player’s board
+    #     computer.report_shot_result(coordinate, result)                    # Report the result of the shot
+    #   end
+
+ 
+     def report_shot_result(coordinate, result)
+        if result == "M"
+          "#{name}'s shot on #{coordinate} was a miss."
+        elsif result == "H"
+          "#{name}'s shot on #{coordinate} was a hit."
+        elsif result == "X"
+          "#{name}'s shot on #{coordinate} sunk a ship!"
+        else
+          "#{name}'s shot result is unknown."
         end
     end
 
@@ -172,16 +259,6 @@ end
     # end
 
 
-
-
-
-
-
-
-
-
-
-
     # user_input = gets.chomp
     #  #any time you call one of these variable you have to call it on an object (always call the methods on an object)
     #  #pattern of transfering the local variable to the instance variable 
@@ -224,3 +301,18 @@ end
 #     end
 # end
     
+
+ # if @comp_board.cells[user_input]
+        #     @comp_board.cells[user_input].fire_upon
+        #     # puts "Shot fired on #{user_input}!"
+        #     computer_shot
+        # else
+        #     puts "Invalid coordinate. Please try again."
+        # end
+        # if user_input.render == "M"
+        #     "Your shot on #{sampled_coord} was a miss."
+        # elsif user_input.render == "H"
+        #     "Your shot on #{sampled_coord} hit my ship!"
+        # elsif user_input.render == "X"
+        #     "Your shot on #{sampled_coord} sunk my ship!"
+        # end

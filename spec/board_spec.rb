@@ -132,7 +132,7 @@ RSpec.describe Board do
                 "C . . . . \n" +
                 "D . . . . \n")       
         end
-board_branch_rendering
+
         it 'render (does reveal)' do
             board = Board.new
             cruiser = Ship.new("Cruiser", 3) 
