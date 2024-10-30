@@ -124,29 +124,25 @@ class Game
     end
   # if cell.render = hit
     # Display shot result
-    def display_shot_result(shooter, coordinate, result)
-        if result.nil?
-          puts "#{shooter} shot on #{coordinate} was a miss."
+    def display_shot_result(name, coordinate, result)
+        if result.is_a?(Ship)
+          puts "Your shot on #{:coordinate} was a hit!"
         elsif result.is_a?(Ship) && result.sunk?
-          puts "#{shooter} shot on #{coordinate} hit and sunk a ship!"
-        elsif result.is_a?(Ship)
-          puts "#{shooter} shot on #{coordinate} was a hit!"
-        # else
-        #   puts "Unexpected result for shot!"
+          puts "Your shot on #{:coordinate} hit and sunk a ship!"
+        elsif result.nil?
+          puts "Your shot on #{:coordinate} was a miss."
+        else
+          puts "Unexpected result for shot!"
         end
-      end
+    end
   
     # Check if a winner is declared and end the game
     def winner_declared
-      if @comp_cruiser.sunk? && @comp_sub.sunk?
-        puts "You win! At ease, Sailor."
-        true
-      elsif @player_cruiser.sunk? && @player_sub.sunk?
-        puts "I win!"
-        true
-      else
-        false
-      end
+        if @comp_cruiser.sunk? && @comp_sub.sunk?
+            puts "You win! At ease, Sailor."
+        elsif @player_cruiser.sunk? && @player_sub.sunk?
+            puts "I win!"
+        end
     end
   
     # End the game
