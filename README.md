@@ -1,2 +1,6 @@
 # battleship
 Mod1_Project3_Battleship
+1. We started by trying to figure out the goal of each section of this iteration and broke it down into small steps. We soon realized that each sub-section had MANY small steps, from finding a random array and ensuring it’s valid, to customizing messages for each shot. We relied heavily on our notes and previous projects.  The game flow from War and Peace helped inform this setup, and we testes as much as we could with the runner file and reworked things when the results weren’t quite right.
+2. We would work on Iteration 3 more especially, working through use cases and fixing the final step (making sure the boards stop showing up!).  It would be great to go through all the classes and try our hand at refactoring now that we have a better understanding of the bigger picture.
+3. Lots of collaborative working. We both had code that worked and we used in the tests, and this gave us the ability to not sift through a bunch of our own code, rather got to choose what code we were going to utilize and make work.
+4. We were just very direct and compassionate. Nothing felt like an argument and we both learned more about each other's techniques and abilities and were able to adapt well to each other with that.
