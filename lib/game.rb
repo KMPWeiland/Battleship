@@ -142,6 +142,9 @@ class Game
             puts "You win! At ease, Sailor."
         elsif @player_cruiser.sunk? && @player_sub.sunk?
             puts "I win!"
+            true
+        else
+            false
         end
     end
   
