@@ -78,10 +78,10 @@ class Game
       loop do
         display_boards
         player_shot
-        break if winner_declared
+        break if game_over?
   
         computer_shot
-        break if winner_declared
+        break if game_over?
       end
     end
   
@@ -137,16 +137,21 @@ class Game
     end
   
     # Check if a winner is declared and end the game
-    def winner_declared
-        if @comp_cruiser.sunk? && @comp_sub.sunk?
-            puts "You win! At ease, Sailor."
-        elsif @player_cruiser.sunk? && @player_sub.sunk?
-            puts "I win!"
-            true
+    def game_over?
+        player_won = [@comp_cruiser, @comp_sub].all?(&:sunk?)
+        computer_won = [@player_cruiser, @player_sub].all?(&:sunk?)
+      
+        if player_won
+          puts "You won! All enemy ships have been sunk."
+          true
+        elsif computer_won
+          puts "Computer won! All your ships have been sunk."
+          true
         else
-            false
+          false
         end
-    end
+      end
+  
   
     # End the game
     def leave_game
